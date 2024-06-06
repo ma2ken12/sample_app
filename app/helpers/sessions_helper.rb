@@ -19,8 +19,8 @@ module SessionsHelper
   
   # 現在のユーザーをログアウトする
   def log_out
-    session.delete(:user_id)
-    @current_user = nil
+    reset_session
+    @current_user = nil   # 安全のため
   end
 
   # 渡されたユーザーがカレントユーザーであればtrueを返す
@@ -34,7 +34,7 @@ module SessionsHelper
     session.delete(:forwarding_url)
   end
 
-  # アクセスしようとしたURLを覚えておく
+  # アクセスしようとしたURLを保存する
   def store_location
     session[:forwarding_url] = request.original_url if request.get?
   end
